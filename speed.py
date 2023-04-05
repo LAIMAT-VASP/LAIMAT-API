@@ -1,7 +1,18 @@
 import math
 
-def speed(gravity, height):
-    return math.sqrt(2 * int(gravity) * int(height))
+def speed(g, h):
+
+    # Paramètres de l'objet
+    m = 10  # kg
+    A = 0.7  # m²
+    Cd = 1.0  # coefficient de traînée
+    rho = 1.2  # kg/m³
+    v0 = 0  # vitesse initiale de l'objet en m/s
+
+    # Calcul de la vitesse d'impact
+    v = math.sqrt((2 * m * (g * h + v0**2/2)) / (rho * A * Cd))
+    v = round(v, 2)
+    return v
 
 class TestSpeed:
     def test_speed_no_height():
