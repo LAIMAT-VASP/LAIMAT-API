@@ -6,9 +6,11 @@ from flask_cors import CORS, cross_origin
 import unittest
 
 app = Flask(__name__)
-CORS(app, resources={r'/*': {'origins': '*'}})
+
+CORS(app)
 
 @app.route('/')
+@cross_origin
 def index():
     return 'Hello, World!'
 
@@ -56,6 +58,7 @@ def test_hypothenuse(test_number):
 #region Speed
 @cross_origin
 @app.route('/speed')
+@cross_origin
 def calculate_speed():
     gravity = request.args.get('gravity', default=9.81, type=float)
     height = request.args.get('height', default=10, type=float)
@@ -74,6 +77,7 @@ def calculate_speed():
 
 @cross_origin
 @app.route('/speed/tests')
+@cross_origin
 def test_speed():
     ts = TestSpeed()
     results = {}
