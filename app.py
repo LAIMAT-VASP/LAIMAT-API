@@ -1,17 +1,21 @@
 from flask import Flask, jsonify, request
 from hypothenuse import TestHypothenuse, hypothenuse
+from flask_cors import CORS, cross_origin
 from speed import TestSpeed, speed
 import unittest
 
 app = Flask(__name__)
 
+CORS(app)
 
 @app.route('/')
+@cross_origin
 def index():
     return 'Hello, World!'
 
 #region Hypothenuse
 @app.route('/hypothenuse')
+@cross_origin
 def calculate_hypothenuse():
     a = request.args.get('a', default=3, type=float)
     b = request.args.get('b', default=4, type=float)
@@ -29,6 +33,7 @@ def calculate_hypothenuse():
 
 
 @app.route('/hypothenuse/test')
+@cross_origin
 def test_hypothenuse():
     th = TestHypothenuse()
     results = {}
@@ -48,6 +53,7 @@ def test_hypothenuse():
 
 #region Speed
 @app.route('/speed')
+@cross_origin
 def calculate_speed():
     gravity = request.args.get('gravity', default=9.81, type=float)
     height = request.args.get('height', default=10, type=float)
@@ -65,6 +71,7 @@ def calculate_speed():
         return f'The speed is: {speed(gravity, height)}'
 
 @app.route('/speed/tests')
+@cross_origin
 def test_speed():
     ts = TestSpeed()
     results = {}
