@@ -15,7 +15,8 @@ def index():
     return 'Hello, World!'
 
 #region Hypothenuse
-@app.route('/hypothenuse', endpoint=' calculate_hypothenuse')
+@cross_origin
+@app.route('/hypothenuse')
 def calculate_hypothenuse():
     a = request.args.get('a', type=float)
     b = request.args.get('b', type=float)
@@ -35,7 +36,8 @@ def calculate_hypothenuse():
 
     return f'The hypothenuse is: {hypothenuse(a, b)}'
 
-@app.route('/hypothenuse/test/<int:test_number>', endpoint='hypothenuse_test')
+@cross_origin
+@app.route('/hypothenuse/test/<int:test_number>')
 def test_hypothenuse(test_number):
     th = TestHypothenuse()
     test_methods = [name for name in dir(th) if name.startswith('test_hypothenuse_route')]
@@ -58,7 +60,7 @@ def test_hypothenuse(test_number):
 #region Speed
 @cross_origin
 @app.route('/speed')
-@cross_origin
+
 def calculate_speed():
     gravity = request.args.get('gravity', default=9.81, type=float)
     height = request.args.get('height', default=10, type=float)
@@ -77,7 +79,7 @@ def calculate_speed():
 
 @cross_origin
 @app.route('/speed/tests')
-@cross_origin
+
 def test_speed():
     ts = TestSpeed()
     results = {}
