@@ -9,8 +9,9 @@ app = Flask(__name__)
 
 CORS(app)
 
-@app.route('/')
+
 @cross_origin
+@app.route('/')
 def index():
     return 'Hello, World!'
 
@@ -18,23 +19,21 @@ def index():
 @cross_origin
 @app.route('/hypothenuse')
 def calculate_hypothenuse():
-    a = request.args.get('a', type=float)
-    b = request.args.get('b', type=float)
-    
-    th = TestHypothenuse()
-    test_methods = [name for name in dir(th) if name.startswith('test_hypothenuse')]
-    
-    for test_name in test_methods:
-        test_method = getattr(th, test_name)
-        try:
-            test_method()
-            print(f'{test_name}: PASS')
-        except AssertionError:
-            return f'{test_name}: FAIL', 400
-        except Exception as e:
-            return f'{test_name}: ERROR: {str(e)}', 400
+    a = request.args.get('a', default=None, type=str)
+    b = request.args.get('b', default=None, type=str)
 
-    return f'The hypothenuse is: {hypothenuse(a, b)}'
+    try:
+        a = float(a)
+        b = float(b)
+    except ValueError:
+        return jsonify({"error": "Invalid input. Both 'a' and 'b' must be numbers."}), 400
+
+    if a < 0 or b < 0:
+        return jsonify({"error": "Invalid input. Both 'a' and 'b' must be positive numbers."}), 400
+
+    result = hypothenuse(a, b)
+    return jsonify({"hypothenuse": result})
+
 
 @cross_origin
 @app.route('/hypothenuse/test/<int:test_number>')
