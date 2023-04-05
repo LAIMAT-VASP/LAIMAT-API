@@ -1,7 +1,7 @@
 import math
 
 def speed(gravity, height):
-    return math.sqrt(2 * gravity * height)
+    return math.sqrt(2 * int(gravity) * int(height))
 
 class TestSpeed:
     def test_speed_no_height():
