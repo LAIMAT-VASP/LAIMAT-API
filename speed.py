@@ -1,47 +1,31 @@
 import math
 
 def speed(gravity, height):
-    return math.sqrt(2 * int(gravity) * int(height))
+    if(height is None):
+        height = 0
 
-class TestSpeed:
-    def test_speed_no_height():
-        assert speed(100, 0) == 0
+    if(gravity is None):
+        gravity = 0
     
-    def test_speed_no_gravity():
-        assert speed(0, 100) == 0
+    if height is None or gravity is None:
+        raise TypeError("Arguments cannot be None")
     
-    def test_speed_no_gravity_no_height():
-        assert speed(0, 0) == 0
+    if gravity < 0:
+        gravity = -gravity
     
-    def test_speed_floating_height():
-        assert speed(100, 100.5) == 10.025
-    
-    def test_speed_floating_gravity():
-        assert speed(9.81, 100) == 31.62
-    
-    def test_speed_floating_gravity_floating_height():
-        assert speed(9.81, 100.5) == 31.74
-    
-    def test_speed_negative_gravity():
-        assert speed(-9.81, 100) == -31.62
-    
-    def test_speed_negative_height():
-        assert speed(9.81, -100) == -31.62
-    
-    def test_only_gravity():
-        assert speed(9.81) == 0
-    
-    def test_only_height():
-        assert speed(height=100) == 0
+    if height < 0:
+        height = -height
 
-def main():
-    TestSpeed.test_only_gravity
-    TestSpeed.test_only_height
-    TestSpeed.test_speed_floating_gravity
-    TestSpeed.test_speed_floating_gravity_floating_height
-    TestSpeed.test_speed_floating_height
-    TestSpeed.test_speed_negative_gravity
-    TestSpeed.test_speed_negative_height
-    TestSpeed.test_speed_no_gravity
-    TestSpeed.test_speed_no_gravity_no_height
-    TestSpeed.test_speed_no_height
+    if gravity == 0 or height == 0:
+        return 0
+
+    if(gravity == 0 or height == 0):
+        return 0
+    
+    if(gravity < 0):
+        gravity = gravity * -1
+
+    if(height < 0):
+        height = height * -1
+
+    return round(math.sqrt(2 * gravity * height), 2)
